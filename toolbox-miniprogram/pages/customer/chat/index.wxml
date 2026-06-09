@@ -1,0 +1,56 @@
+<view class="chat-page">
+  <view class="chat-header">
+    <view class="header-left" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="header-title">
+      <text>{{ isHuman ? '人工客服' : '智能助手' }}</text>
+    </view>
+    <view class="header-right">
+      <text class="more-icon" bindtap="showMore">···</text>
+    </view>
+  </view>
+
+  <scroll-view class="message-list" scroll-y scroll-top="{{scrollTop}}" bindscrolltoupper="loadMore">
+    <view class="message-wrapper" wx:for="{{messages}}" wx:key="msg_id">
+      <!-- 系统消息 -->
+      <view class="message system" wx:if="{{item.sender_type === 'system'}}">
+        <text class="system-text">{{item.content}}</text>
+      </view>
+
+      <!-- AI/客服消息 -->
+      <view class="message ai" wx:elif="{{item.sender_type === 2 || item.sender_type === 3}}">
+        <view class="avatar">🤖</view>
+        <view class="message-content">
+          <text class="content-text">{{item.content}}</text>
+          <text class="time">{{formatTime(item.create_time)}}</text>
+        </view>
+      </view>
+
+      <!-- 用户消息 -->
+      <view class="message user" wx:else>
+        <view class="message-content">
+          <text class="content-text">{{item.content}}</text>
+          <text class="time">{{formatTime(item.create_time)}}</text>
+        </view>
+        <view class="avatar">{{userAvatar}}</view>
+      </view>
+    </view>
+
+    <!-- 转人工按钮 -->
+    <view class="transfer-hint" wx:if="{{showTransferHint}}">
+      <text>以上信息是否解决了您的问题？</text>
+      <view class="transfer-btn" bindtap="onTransferToHuman">转人工客服</view>
+    </view>
+  </scroll-view>
+
+  <view class="input-area">
+    <input class="message-input" 
+           type="text" 
+           value="{{inputValue}}" 
+           placeholder="输入消息..."
+           bindinput="onInput"
+           bindconfirm="sendMessage"/>
+    <view class="send-btn" bindtap="sendMessage">发送</view>
+  </view>
+</view>

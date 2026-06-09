@@ -1,0 +1,67 @@
+<view class="container">
+  <!-- 标题 -->
+  <view class="header">
+    <text class="title">PDF合并</text>
+    <text class="subtitle">将多个PDF合并为一个</text>
+  </view>
+
+  <!-- 上传区域 -->
+  <view class="upload-area" bindtap="chooseFiles">
+    <view class="upload-content">
+      <text class="upload-icon">📁</text>
+      <text class="upload-text">点击选择PDF文件</text>
+      <text class="upload-hint">支持多个文件，可调整顺序</text>
+    </view>
+  </view>
+
+  <!-- 文件列表 -->
+  <view class="file-list" wx:if="{{fileList.length > 0}}">
+    <view class="list-header">
+      <text class="list-title">已选择文件 ({{fileList.length}})</text>
+      <text class="clear-btn" bindtap="clearAll">清空</text>
+    </view>
+    <scroll-view scroll-y="true" class="file-scroll">
+      <view class="file-item" wx:for="{{fileList}}" wx:key="index">
+        <view class="file-drag">
+          <text class="drag-icon">☰</text>
+        </view>
+        <view class="file-info">
+          <text class="file-name">{{item.name}}</text>
+          <text class="file-size">{{formatSize(item.size)}}</text>
+        </view>
+        <text class="file-delete" bindtap="deleteFile" data-index="{{index}}">×</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 合并按钮 -->
+  <view class="action-area">
+    <button class="merge-btn {{fileList.length < 2 ? 'disabled' : ''}}" bindtap="mergePdf" disabled="{{fileList.length < 2 || loading}}" loading="{{loading}}">
+      {{loading ? '合并中...' : '开始合并'}}
+    </button>
+  </view>
+
+  <!-- 结果区域 -->
+  <view class="result-area" wx:if="{{resultPdf}}">
+    <view class="result-card">
+      <text class="result-icon">✅</text>
+      <text class="result-title">合并成功</text>
+      <text class="result-desc">{{resultFileName}}</text>
+      <view class="result-actions">
+        <button class="action-btn" bindtap="previewPdf">预览</button>
+        <button class="action-btn primary" bindtap="downloadPdf">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="info-section">
+    <view class="info-card">
+      <text class="info-title">使用说明</text>
+      <view class="info-item">1. 点击上方选择多个PDF文件</view>
+      <view class="info-item">2. 可以删除不需要的文件</view>
+      <view class="info-item">3. 点击"开始合并"按钮</view>
+      <view class="info-item">4. 合并完成后可预览或保存</view>
+    </view>
+  </view>
+</view>

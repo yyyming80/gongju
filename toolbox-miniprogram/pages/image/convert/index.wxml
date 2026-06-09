@@ -1,0 +1,68 @@
+<view class="page">
+  <view class="header">
+    <text class="title">图片格式转换</text>
+    <text class="subtitle">支持多种图片格式互转</text>
+  </view>
+
+  <view class="upload-area" wx:if="{{!imagePath}}" bindtap="chooseImage">
+    <view class="upload-content">
+      <text class="icon">🖼️</text>
+      <text class="text">点击选择图片</text>
+      <text class="hint">支持JPG、PNG、BMP格式</text>
+    </view>
+  </view>
+
+  <view class="file-section" wx:if="{{imagePath}}">
+    <view class="file-card">
+      <image class="preview-img" src="{{imagePath}}" mode="aspectFit"></image>
+      <view class="file-info">
+        <text class="file-name">{{imageName}}</text>
+        <text class="file-size">{{width}} × {{height}}</text>
+      </view>
+      <text class="clear-btn" bindtap="clearImage">×</text>
+    </view>
+
+    <view class="format-section">
+      <text class="format-title">选择目标格式</text>
+      <view class="format-list">
+        <text 
+          class="format-item {{targetFormat === 'png' ? 'active' : ''}}" 
+          data-format="png"
+          bindtap="onFormatChange">PNG</text>
+        <text 
+          class="format-item {{targetFormat === 'jpg' ? 'active' : ''}}" 
+          data-format="jpg"
+          bindtap="onFormatChange">JPG</text>
+        <text 
+          class="format-item {{targetFormat === 'bmp' ? 'active' : ''}}" 
+          data-format="bmp"
+          bindtap="onFormatChange">BMP</text>
+      </view>
+    </view>
+
+    <button class="convert-btn" bindtap="convertImage" loading="{{loading}}">
+      {{loading ? '转换中...' : '开始转换'}}
+    </button>
+  </view>
+
+  <view class="result-section" wx:if="{{resultImage}}">
+    <view class="result-card">
+      <text class="result-title">转换成功</text>
+      <image class="result-img" src="{{resultImage}}" mode="aspectFit"></image>
+      <view class="result-actions">
+        <button class="action-btn" bindtap="previewResult">预览</button>
+        <button class="action-btn primary" bindtap="saveImage">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="info-card">
+      <text class="info-title">使用说明</text>
+      <view class="info-item">1. 点击上方选择图片</view>
+      <view class="info-item">2. 选择目标格式</view>
+      <view class="info-item">3. 点击"开始转换"</view>
+      <view class="info-item">4. 预览或保存转换后的图片</view>
+    </view>
+  </view>
+</view>

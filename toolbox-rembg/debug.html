@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>证件照换底色 - 测试页</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .container { text-align: center; }
+        .status { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .ok { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .color-buttons { margin: 20px 0; }
+        .color-btn { padding: 15px 30px; margin: 0 10px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+        .white { background: #ffffff; border: 1px solid #ccc; }
+        .blue { background: #4385f5; color: white; }
+        .red { background: #ff4b4b; color: white; }
+        img { max-width: 400px; margin: 20px; border: 2px dashed #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 证件照换底色 - 测试工具</h1>
+        
+        <div id="rembgStatus" class="status error">❌ Rembg服务未连接</div>
+        <div id="backendStatus" class="status error">❌ Spring Boot后端未连接</div>
+        
+        <hr>
+        
+        <h3>上传照片</h3>
+        <input type="file" id="imageInput" accept="image/*">
+        
+        <div class="color-buttons">
+            <button class="color-btn white" onclick="processImage('white')">白底</button>
+            <button class="color-btn blue" onclick="processImage('blue')">蓝底</button>
+            <button class="color-btn red" onclick="processImage('red')">红底</button>
+        </div>
+        
+        <div id="preview">
+            <h3>原图</h3>
+            <img id="originalImg" style="display:none;">
+            <h3>结果</h3>
+            <img id="resultImg" style="display:none;">
+        </div>
+    </div>
+
+    <script>
+        // 检查服务状态
+        async function checkServices() {
+            // 检查Rembg
+            try {
+                const rembgRes = await fetch('http://localhost:5000/health');
+                if (rembgRes.ok) {
+                    document.getElementById('rembgStatus').className = 'status ok';
+                    document.getElementById('rembgStatus').textContent = '✅ Rembg服务正常';
+                }
+            } catch (e) {
+                console.error('Rembg check failed:', e);
+            }
+            
+            // 检查Spring Boot
+            try {
+                const testRes = await fetch('http://localhost:8080/api/simple-image/health');
+                if (testRes.ok) {
+                    document.getElementById('backendStatus').className = 'status ok';
+                    document.getElementById('backendStatus').textContent = '✅ Spring Boot后端正常';
+                }
+            } catch (e) {
+                console.error('Backend check failed:', e);
+            }
+        }
+        
+        // 预览图片
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('originalImg').src = event.target.result;
+                    document.getElementById('originalImg').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // 处理图片
+        async function processImage(color) {
+            const fileInput = document.getElementById('imageInput');
+            if (!fileInput.files[0]) {
+                alert('请先上传图片！');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('color', color);
+            
+            try {
+                alert('正在处理，请稍候...');
+                
+                const response = await fetch('http://localhost:8080/api/simple-image/background', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('Server response:', result);
+                
+                if (result.code === 200 && result.data && result.data.fileUrl) {
+                    document.getElementById('resultImg').src = result.data.fileUrl;
+                    document.getElementById('resultImg').style.display = 'block';
+                    alert('处理成功！');
+                } else {
+                    alert('处理失败: ' + (result.msg || '未知错误'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('请求失败！请确认Spring Boot后端已启动。\n\n错误: ' + error.message);
+            }
+        }
+        
+        // 页面加载时检查服务
+        window.onload = checkServices;
+    </script>
+</body>
+</html>

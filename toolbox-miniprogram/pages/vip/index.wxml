@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="header">
+    <text class="vip-icon">👑</text>
+    <text class="title">VIP会员</text>
+    <text class="subtitle">开通VIP，享受更多权益</text>
+  </view>
+
+  <view class="products">
+    <view wx:for="{{products}}" wx:key="id" 
+          class="product-item {{item.recommended ? 'recommended' : ''}}"
+          bindtap="selectProduct" data-id="{{item.id}}">
+      <view class="product-name">{{item.name}}</view>
+      <view class="product-price">
+        <text class="currency">¥</text>
+        <text class="amount">{{item.price}}</text>
+      </view>
+      <view class="product-period">{{item.period}}</view>
+      <view class="product-features">
+        <text wx:for="{{item.features}}" wx:key="index">✓ {{item}}</text>
+      </view>
+      <button class="buy-btn" bindtap="buyVip" data-product="{{item}}">立即开通</button>
+    </view>
+  </view>
+</view>

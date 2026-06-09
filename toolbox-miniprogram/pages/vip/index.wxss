@@ -1,0 +1,91 @@
+.page {
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 0;
+  background: linear-gradient(135deg, #fa8c16 0%, #eb2f96 100%);
+  border-radius: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.header .vip-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.header .title {
+  font-size: 24px;
+  font-weight: bold;
+  display: block;
+}
+
+.header .subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-top: 8px;
+  display: block;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid transparent;
+}
+
+.product-item.recommended {
+  border-color: #fa8c16;
+  position: relative;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.product-price {
+  margin: 12px 0;
+}
+
+.product-price .currency {
+  font-size: 14px;
+  color: #f56c6c;
+}
+
+.product-price .amount {
+  font-size: 32px;
+  font-weight: bold;
+  color: #f56c6c;
+}
+
+.product-period {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+.product-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.buy-btn {
+  width: 100%;
+  background: #fa8c16;
+  color: #fff;
+  border-radius: 8px;
+}

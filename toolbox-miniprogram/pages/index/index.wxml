@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="header-box">
+    <text class="title">ToolBox</text>
+  </view>
+
+  <!-- PDF工具箱 -->
+  <view class="section-box">
+    <view class="section-title">PDF工具箱</view>
+    <view class="tool-grid">
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/pdf/merge/index">
+        <view class="tool-icon">📄</view>
+        <text class="tool-name">PDF合并</text>
+      </view>
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/pdf/split/index">
+        <view class="tool-icon">✂️</view>
+        <text class="tool-name">PDF拆分</text>
+      </view>
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/pdf/image2pdf/index">
+        <view class="tool-icon">🖼️</view>
+        <text class="tool-name">图片转PDF</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 图片处理 -->
+  <view class="section-box">
+    <view class="section-title">图片处理</view>
+    <view class="tool-grid">
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/image/background/index">
+        <view class="tool-icon">🎨</view>
+        <text class="tool-name">证件照换底</text>
+      </view>
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/image/compress/index">
+        <view class="tool-icon">📷</view>
+        <text class="tool-name">图片压缩</text>
+      </view>
+      <view class="tool-item" bindtap="navigateTo" data-url="/pages/image/convert/index">
+        <view class="tool-icon">🔄</view>
+        <text class="tool-name">格式转换</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部导航 -->
+  <view class="bottom-nav">
+    <view class="nav-item" bindtap="navigateTo" data-url="/pages/profile/profile">
+      <view class="nav-box">
+        <text class="nav-text">账户设置</text>
+      </view>
+    </view>
+  </view>
+</view>

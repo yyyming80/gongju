@@ -1,0 +1,139 @@
+.container {
+  min-height: 100vh;
+  background-color: #F5F6F8;
+  padding-bottom: 20rpx;
+}
+
+.user-section {
+  padding: 40rpx 30rpx;
+}
+
+.user-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 60rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.user-avatar-wrap {
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.vip-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.user-nickname {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-text {
+  font-size: 24rpx;
+  padding: 6rpx 24rpx;
+  border-radius: 20rpx;
+}
+
+.status-text.vip {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #fff;
+}
+
+.status-text.normal {
+  background-color: #f0f0f0;
+  color: #999;
+}
+
+.menu-section {
+  padding: 0 30rpx;
+}
+
+.menu-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.menu-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+.menu-divider {
+  height: 1rpx;
+  background-color: #f5f5f5;
+  margin-left: 90rpx;
+}
+
+.logout-section {
+  padding: 40rpx 30rpx;
+}
+
+.logout-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+.logout-btn {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.logout-text {
+  font-size: 28rpx;
+  color: #ff4b4b;
+}
+
+.version {
+  text-align: center;
+  font-size: 24rpx;
+  color: #ccc;
+  padding: 40rpx 0;
+}

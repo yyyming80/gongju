@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/profile/profile",
+    "pages/login/index",
+    "pages/pdf/merge/index",
+    "pages/pdf/split/index",
+    "pages/pdf/image2pdf/index",
+    "pages/image/background/index",
+    "pages/image/compress/index",
+    "pages/image/convert/index",
+    "pages/chat/chat/index",
+    "pages/module/index",
+    "pages/customer/index/index",
+    "pages/customer/chat/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#667eea",
+    "navigationBarTitleText": "工具箱",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7fa"
+  },
+  "sitemapLocation": "sitemap.json"
+}

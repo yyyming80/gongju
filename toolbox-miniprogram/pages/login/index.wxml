@@ -1,0 +1,54 @@
+<view class="container">
+  <!-- Logo区域 -->
+  <view class="logo-section">
+    <view class="logo-icon">🧰</view>
+    <text class="app-name">ToolBox</text>
+    <text class="app-desc">多功能工具箱</text>
+  </view>
+
+  <!-- 登录说明 -->
+  <view class="desc-section">
+    <text class="desc-title">登录说明</text>
+    <view class="desc-item">
+      <text class="desc-icon">✓</text>
+      <text class="desc-text">使用微信账号登录</text>
+    </view>
+    <view class="desc-item">
+      <text class="desc-icon">✓</text>
+      <text class="desc-text">获取您的头像和昵称</text>
+    </view>
+    <view class="desc-item">
+      <text class="desc-icon">✓</text>
+      <text class="desc-text">保护您的个人隐私</text>
+    </view>
+  </view>
+
+  <!-- 登录按钮 -->
+  <view class="login-section">
+    <button 
+      class="login-btn" 
+      type="primary" 
+      bindtap="onWechatLogin"
+      disabled="{{loading}}">
+      <text class="btn-icon">📱</text>
+      <text class="btn-text">{{loading ? '登录中...' : '微信登录'}}</text>
+    </button>
+    
+    <button 
+      class="guest-btn" 
+      bindtap="onGuestMode"
+      disabled="{{loading}}">
+      <text class="btn-text-guest">游客模式体验</text>
+    </button>
+  </view>
+
+  <!-- 协议 -->
+  <view class="agreement-section">
+    <text class="agreement-text">
+      登录即表示同意
+      <text class="link" bindtap="showAgreement">《用户协议》</text>
+      和
+      <text class="link" bindtap="showPrivacy">《隐私政策》</text>
+    </text>
+  </view>
+</view>

@@ -1,0 +1,74 @@
+<view class="container">
+  <view class="header">
+    <text class="title">证件照换底色</text>
+    <text class="subtitle">AI智能抠图，一键换底色</text>
+  </view>
+
+  <view class="upload-area" wx:if="{{!imagePath}}">
+    <view class="upload-placeholder" bindtap="chooseImage">
+      <view class="upload-icon">📷</view>
+      <text class="upload-text">点击上传证件照</text>
+      <text class="upload-hint">支持相册选择或拍照</text>
+    </view>
+  </view>
+
+  <view class="image-display-area" wx:if="{{imagePath}}">
+    <view class="image-section">
+      <text class="section-label">原图</text>
+      <image class="preview-image" src="{{imagePath}}" mode="aspectFit"></image>
+    </view>
+
+    <view class="image-section" wx:if="{{resultImage}}">
+      <text class="section-label">结果</text>
+      <image class="preview-image" src="{{resultImage}}" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="color-section" wx:if="{{imagePath}}">
+    <view class="section-title">选择背景颜色</view>
+    <view class="color-grid">
+      <view 
+        class="color-item {{selectedColor === 'white' ? 'active' : ''}}" 
+        data-color="white"
+        bindtap="selectColor"
+      >
+        <view class="color-preview" style="background-color: #ffffff;"></view>
+        <text class="color-name">白色</text>
+      </view>
+      <view 
+        class="color-item {{selectedColor === 'blue' ? 'active' : ''}}" 
+        data-color="blue"
+        bindtap="selectColor"
+      >
+        <view class="color-preview" style="background-color: #4385f5;"></view>
+        <text class="color-name">蓝色</text>
+      </view>
+      <view 
+        class="color-item {{selectedColor === 'red' ? 'active' : ''}}" 
+        data-color="red"
+        bindtap="selectColor"
+      >
+        <view class="color-preview" style="background-color: #ff4b4b;"></view>
+        <text class="color-name">红色</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-area" wx:if="{{imagePath}}">
+    <button class="process-btn" bindtap="processImage" loading="{{loading}}" disabled="{{loading}}">
+      {{loading ? 'AI处理中...' : '一键换底色'}}
+    </button>
+  </view>
+
+  <view class="result-area" wx:if="{{resultImage}}">
+    <view class="result-card">
+      <view class="result-icon">✅</view>
+      <text class="result-title">处理完成</text>
+      <image class="result-preview" src="{{resultImage}}" mode="aspectFit"></image>
+      <view class="result-actions">
+        <button class="action-btn" bindtap="chooseImage">重新上传</button>
+        <button class="action-btn" bindtap="saveImage">保存图片</button>
+      </view>
+    </view>
+  </view>
+</view>

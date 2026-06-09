@@ -1,0 +1,139 @@
+.customer-index {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 40rpx 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.content {
+  padding: 30rpx;
+}
+
+.service-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-icon {
+  width: 100rpx;
+  height: 100rpx;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+
+.ai-service .card-icon {
+  background: #e8f4ff;
+}
+
+.human-service .card-icon {
+  background: #fff3e8;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.card-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+}
+
+.action-text {
+  font-size: 28rpx;
+  color: #667eea;
+  margin-right: 8rpx;
+}
+
+.arrow {
+  font-size: 28rpx;
+  color: #667eea;
+}
+
+.faq-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.faq-list {
+  border-top: 1rpx solid #eee;
+}
+
+.faq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.faq-item text:first-child {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.faq-item .arrow {
+  color: #ccc;
+  font-size: 32rpx;
+}
+
+.history-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-section text:first-child {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.history-section .arrow {
+  color: #ccc;
+  font-size: 32rpx;
+}

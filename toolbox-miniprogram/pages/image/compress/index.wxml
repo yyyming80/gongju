@@ -1,0 +1,70 @@
+<view class="page">
+  <view class="header">
+    <text class="title">图片压缩</text>
+    <text class="subtitle">高质量图片压缩，保留清晰度</text>
+  </view>
+
+  <view class="upload-area" wx:if="{{!imagePath}}" bindtap="chooseImage">
+    <view class="upload-content">
+      <text class="icon">🖼️</text>
+      <text class="text">点击选择图片</text>
+      <text class="hint">支持JPG、PNG格式</text>
+    </view>
+  </view>
+
+  <view class="file-section" wx:if="{{imagePath}}">
+    <view class="file-card">
+      <image class="preview-img" src="{{imagePath}}" mode="aspectFit"></image>
+      <view class="file-info">
+        <text class="file-name">{{imageName}}</text>
+        <text class="file-size">{{width}} × {{height}} | {{formatSize(imageSize)}}</text>
+      </view>
+      <text class="clear-btn" bindtap="clearImage">×</text>
+    </view>
+
+    <view class="quality-section">
+      <text class="quality-title">压缩质量</text>
+      <slider class="quality-slider" value="{{quality}}" min="10" max="100" step="10" show-value bindchange="onQualityChange"/>
+      <text class="quality-hint">当前: {{quality}}%</text>
+    </view>
+
+    <button class="compress-btn" bindtap="compressImage" loading="{{loading}}">
+      {{loading ? '压缩中...' : '开始压缩'}}
+    </button>
+  </view>
+
+  <view class="result-section" wx:if="{{resultImage}}">
+    <view class="result-card">
+      <text class="result-title">压缩成功</text>
+      <image class="result-img" src="{{resultImage}}" mode="aspectFit"></image>
+      <view class="result-info">
+        <view class="size-row">
+          <text class="size-label">压缩前：</text>
+          <text class="size-value">{{formatSize(originalSize)}}</text>
+        </view>
+        <view class="size-row">
+          <text class="size-label">压缩后：</text>
+          <text class="size-value">{{formatSize(compressedSize)}}</text>
+        </view>
+        <view class="size-row">
+          <text class="size-label">节省：</text>
+          <text class="size-value highlight">{{compressionRate}}</text>
+        </view>
+      </view>
+      <view class="result-actions">
+        <button class="action-btn" bindtap="previewResult">预览</button>
+        <button class="action-btn primary" bindtap="saveImage">保存</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="info-card">
+      <text class="info-title">使用说明</text>
+      <view class="info-item">1. 点击上方选择图片</view>
+      <view class="info-item">2. 调整压缩质量</view>
+      <view class="info-item">3. 点击"开始压缩"</view>
+      <view class="info-item">4. 保存压缩后的图片</view>
+    </view>
+  </view>
+</view>

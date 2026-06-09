@@ -1,0 +1,62 @@
+<view class="customer-index">
+  <view class="header">
+    <text class="title">客服中心</text>
+  </view>
+
+  <view class="content">
+    <!-- 智能助手入口 -->
+    <view class="service-card ai-service" bindtap="startChat">
+      <view class="card-icon">🤖</view>
+      <view class="card-info">
+        <text class="card-title">智能助手</text>
+        <text class="card-desc">24小时在线，即问即答</text>
+      </view>
+      <view class="card-action">
+        <text class="action-text">立即咨询</text>
+        <text class="arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 转人工入口 -->
+    <view class="service-card human-service" bindtap="transferToHuman">
+      <view class="card-icon">👨‍💻</view>
+      <view class="card-info">
+        <text class="card-title">人工客服</text>
+        <text class="card-desc">工作时间: 9:00-21:00</text>
+      </view>
+      <view class="card-action">
+        <text class="action-text">转人工</text>
+        <text class="arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 常见问题 -->
+    <view class="faq-section">
+      <text class="section-title">常见问题</text>
+      <view class="faq-list">
+        <view class="faq-item" bindtap="onFaqTap" data-question="如何开通VIP会员？">
+          <text>如何开通VIP会员？</text>
+          <text class="arrow">›</text>
+        </view>
+        <view class="faq-item" bindtap="onFaqTap" data-question="PDF合并失败怎么办？">
+          <text>PDF合并失败怎么办？</text>
+          <text class="arrow">›</text>
+        </view>
+        <view class="faq-item" bindtap="onFaqTap" data-question="图片压缩有次数限制吗？">
+          <text>图片压缩有次数限制吗？</text>
+          <text class="arrow">›</text>
+        </view>
+        <view class="faq-item" bindtap="onFaqTap" data-question="如何查看我的使用记录？">
+          <text>如何查看我的使用记录？</text>
+          <text class="arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 我的会话记录 -->
+    <view class="history-section" bindtap="viewHistory">
+      <text>我的会话记录</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+</view>

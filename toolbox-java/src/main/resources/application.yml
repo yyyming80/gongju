@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: toolbox
+  datasource:
+    url: jdbc:mysql://localhost:3306/toolbox?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: abc.123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+server:
+  port: 8080
+
+# 文件存储路径
+toolbox:
+  upload:
+    path: D:/toolbox/uploads
+  file:
+    base-url: http://localhost:8080/files/
+
+# Rembg API配置
+rembg:
+  api:
+    url: http://localhost:5000
+
+# Ollama本地AI模型配置
+ollama:
+  url: http://localhost:11434
+  model: qwen2.5
+
+# 微信小程序配置
+wechat:
+  appid: wxf48e5f0cd51ae481          # 替换为你的小程序AppID
+  secret: 1848df62e527c9392ce014317ae19ab7    # 替换为你的小程序AppSecret
+
+logging:
+  level:
+    com.toolbox: DEBUG

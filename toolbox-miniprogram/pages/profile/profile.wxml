@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-card" bindtap="goToLogin">
+      <view class="user-avatar-wrap">
+        <image class="user-avatar" src="{{userInfo.avatar}}" mode="aspectFill" />
+        <view class="vip-badge" wx:if="{{userInfo.isVip}}">VIP</view>
+      </view>
+      <text class="user-nickname">{{userInfo.nickname}}</text>
+      <view class="user-status" wx:if="{{isGuest}}">
+        <text class="status-text guest">游客用户</text>
+      </view>
+      <view class="user-status" wx:elif="{{userInfo.isVip}}">
+        <text class="status-text vip">VIP用户</text>
+      </view>
+      <view class="user-status" wx:else>
+        <text class="status-text normal">普通用户</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="menu-section">
+    <view class="menu-card">
+      <view class="menu-item" bindtap="goToChat">
+        <view class="menu-left">
+          <text class="menu-icon">🤖</text>
+          <text class="menu-text">AI智能客服</text>
+        </view>
+        <view class="menu-right">
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+
+      <view class="menu-divider" />
+
+      <view class="menu-item" bindtap="copyWechat">
+        <view class="menu-left">
+          <text class="menu-icon">💬</text>
+          <text class="menu-text">官方微信</text>
+        </view>
+        <view class="menu-right">
+          <text class="menu-value">{{serviceInfo.wechat}}</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+
+      <view class="menu-divider" />
+
+      <view class="menu-item" bindtap="copyEmail">
+        <view class="menu-left">
+          <text class="menu-icon">📧</text>
+          <text class="menu-text">联系邮箱</text>
+        </view>
+        <view class="menu-right">
+          <text class="menu-value">{{serviceInfo.email}}</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+
+      <!-- 预留区域 - 后续扩展功能 -->
+      <!--
+      <view class="menu-divider" />
+      <view class="menu-item" bindtap="goToVip">
+        <view class="menu-left">
+          <text class="menu-icon">👑</text>
+          <text class="menu-text">VIP会员</text>
+        </view>
+        <view class="menu-right">
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+      -->
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section" wx:if="{{userInfo.nickname !== '未登录'}}">
+    <view class="logout-card">
+      <view class="logout-btn" bindtap="logout">
+        <text class="logout-text">退出登录</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="version">v1.0.0</view>
+</view>

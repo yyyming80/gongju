@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="header">
+    <text class="title">图片转PDF</text>
+    <text class="subtitle">支持多张图片转换为一页一图的PDF</text>
+  </view>
+
+  <view class="upload-area" wx:if="{{tempFilePaths.length === 0}}">
+    <view class="upload-placeholder" bindtap="chooseImages">
+      <view class="upload-icon">📷</view>
+      <text class="upload-text">点击选择图片</text>
+      <text class="upload-hint">支持JPG、PNG格式，最多20张</text>
+    </view>
+  </view>
+
+  <view class="image-list" wx:if="{{tempFilePaths.length > 0}}">
+    <view class="list-header">
+      <text class="list-count">已选择 {{tempFilePaths.length}} 张图片</text>
+      <view class="header-actions">
+        <text class="add-more" bindtap="chooseImages">+ 添加更多</text>
+        <text class="clear-btn" bindtap="clearAll">清空</text>
+      </view>
+    </view>
+
+    <scroll-view scroll-y="true" class="image-scroll">
+      <view class="image-item" wx:for="{{tempFilePaths}}" wx:key="index">
+        <view class="image-wrapper">
+          <image class="preview-img" src="{{item}}" mode="aspectFill"></image>
+          <view class="image-index">{{index + 1}}</view>
+          <view class="image-actions">
+            <text class="action-btn up" catchtap="moveImage" data-index="{{index}}" data-direction="up">↑</text>
+            <text class="action-btn down" catchtap="moveImage" data-index="{{index}}" data-direction="down">↓</text>
+            <text class="action-btn delete" catchtap="removeImage" data-index="{{index}}">×</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="convert-area" wx:if="{{tempFilePaths.length > 0}}">
+    <button class="convert-btn" bindtap="convertToPdf" loading="{{loading}}" disabled="{{loading}}">
+      {{loading ? '转换中...' : '开始转换'}}
+    </button>
+  </view>
+
+  <view class="result-area" wx:if="{{resultPdf}}">
+    <view class="result-card">
+      <view class="result-icon">✅</view>
+      <text class="result-title">转换完成</text>
+      <text class="result-info">共 {{pageCount}} 页</text>
+      <view class="result-actions">
+        <button class="action-btn primary" bindtap="previewPdf">预览PDF</button>
+        <button class="action-btn secondary" bindtap="downloadPdf">保存到本地</button>
+      </view>
+    </view>
+  </view>
+</view>

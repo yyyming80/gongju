@@ -1,0 +1,95 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 60rpx 30rpx 40rpx;
+}
+
+.header-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 24rpx;
+  padding: 60rpx 40rpx;
+  margin-bottom: 40rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+}
+
+.title {
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #fff;
+  display: block;
+}
+
+.section-box {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  padding-left: 10rpx;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24rpx 16rpx;
+}
+
+.tool-item {
+  background-color: #f8f9fa;
+  border-radius: 16rpx;
+  padding: 36rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.tool-item:active {
+  transform: scale(0.95);
+  background-color: #e8f0fe;
+}
+
+.tool-icon {
+  font-size: 64rpx;
+  margin-bottom: 16rpx;
+}
+
+.tool-name {
+  font-size: 26rpx;
+  color: #333;
+  text-align: center;
+}
+
+/* 底部导航 */
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  padding: 30rpx 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-box {
+  background-color: #fff;
+  border-radius: 40rpx;
+  padding: 20rpx 60rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.nav-text {
+  font-size: 28rpx;
+  color: #667eea;
+  font-weight: 500;
+}
