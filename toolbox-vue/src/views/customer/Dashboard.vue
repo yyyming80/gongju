@@ -11,20 +11,17 @@
     <div class="container">
       <aside class="sidebar">
         <el-menu :default-active="activeMenu" router>
-          <el-menu-item index="/customer/dashboard">
-            <span>📊 工作台</span>
+          <el-menu-item index="/customer/online">
+            <span>👨‍💻 在线客服</span>
           </el-menu-item>
           <el-menu-item index="/customer/sessions">
             <span>💬 会话管理</span>
           </el-menu-item>
-          <el-menu-item index="/customer/agents">
-            <span>👨‍💻 在线客服</span>
-          </el-menu-item>
-          <el-menu-item index="/customer/work-orders" disabled>
+          <el-menu-item disabled>
             <span>📋 工单管理</span>
             <el-tag size="small" style="margin-left: 8px">预留</el-tag>
           </el-menu-item>
-          <el-menu-item index="/customer/settings" disabled>
+          <el-menu-item disabled>
             <span>⚙️ 系统设置</span>
             <el-tag size="small" style="margin-left: 8px">预留</el-tag>
           </el-menu-item>
@@ -48,22 +45,30 @@ export default {
   },
   computed: {
     activeMenu() {
-      return this.$route.path;
+      // 根据当前路由设置高亮
+      const path = this.$route.path
+      if (path.startsWith('/customer/online')) {
+        return '/customer/online'
+      }
+      if (path.startsWith('/customer/sessions')) {
+        return '/customer/sessions'
+      }
+      return path
     }
   },
   mounted() {
-    this.loadAgentInfo();
+    this.loadAgentInfo()
   },
   methods: {
     loadAgentInfo() {
-      const info = localStorage.getItem('agentInfo');
+      const info = localStorage.getItem('agentInfo')
       if (info) {
-        this.agentInfo = JSON.parse(info);
+        this.agentInfo = JSON.parse(info)
       }
     },
     handleLogout() {
-      localStorage.removeItem('agentInfo');
-      this.$router.push('/customer/login');
+      localStorage.removeItem('agentInfo')
+      this.$router.push('/customer/login')
     }
   }
 };
@@ -104,7 +109,7 @@ export default {
 }
 
 .sidebar {
-  width: 220px;
+  width: 200px;
   background: #fff;
   border-right: 1px solid #e0e0e0;
 }

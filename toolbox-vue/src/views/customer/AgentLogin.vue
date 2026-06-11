@@ -48,11 +48,12 @@ export default {
       try {
         // 直接提交用户名和明文密码，后端会进行MD5加密验证
         const response = await axios.post('/api/customer/login', this.form);
-        if (response.data.code === 0) {
+        // 后端返回 code: 200，前端需要检查 code === 200
+        if (response.data.code === 200) {
           const agentInfo = response.data.data;
           localStorage.setItem('agentInfo', JSON.stringify(agentInfo));
           this.$message.success('登录成功');
-          this.$router.push('/customer/dashboard');
+          this.$router.push('/customer/online');
         } else {
           this.$message.error(response.data.message || '登录失败');
         }

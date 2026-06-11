@@ -9,8 +9,6 @@
     "pages/image/background/index",
     "pages/image/compress/index",
     "pages/image/convert/index",
-    "pages/chat/chat/index",
-    "pages/module/index",
     "pages/customer/index/index",
     "pages/customer/chat/index"
   ],

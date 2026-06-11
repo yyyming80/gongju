@@ -2,6 +2,7 @@ package com.toolbox.controller;
 
 import com.toolbox.common.Result;
 import com.toolbox.service.ChatService;
+import com.toolbox.service.customer.AiCustomerService;
 import com.toolbox.service.customer.CustomerSessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +27,8 @@ public class ChatController {
     @Autowired
     private CustomerSessionService sessionService;
 
-    /**
-     * 转人工关键词列表
-     */
-    private static final Set<String> TRANSFER_KEYWORDS = new HashSet<>(Arrays.asList(
-            "转人工", "人工客服", "联系客服", "人工服务",
-            "人工", "客服", "投诉", "退款"
-    ));
+    @Autowired
+    private AiCustomerService aiCustomerService;
 
     /**
      * 检查服务状态
@@ -54,6 +50,7 @@ public class ChatController {
     @PostMapping("/send")
     public Result<Map<String, Object>> send(@RequestBody Map<String, Object> request) {
         log.info("========== AI客服收到请求 ==========");
+        log.info("请求参数: {}", request);
         
         String message = (String) request.get("message");
         String userId = (String) request.get("userId");
@@ -61,12 +58,14 @@ public class ChatController {
         String userAvatar = (String) request.get("userAvatar");
         String sessionNo = (String) request.get("sessionNo");
         
+        log.info("userId={}, userNickname={}, sessionNo={}", userId, userNickname, sessionNo);
+        
         if (message == null || message.trim().isEmpty()) {
             return Result.error("消息不能为空");
         }
         
-        // 检查是否包含转人工关键词
-        if (shouldTransferToHuman(message)) {
+        // 检查是否包含转人工关键词（调用统一判断方法）
+        if (AiCustomerService.shouldTransfer(message)) {
             log.info("检测到转人工关键词: {}", message);
             return handleTransferToHuman(message, userId, userNickname, userAvatar, sessionNo);
         }
@@ -89,24 +88,6 @@ public class ChatController {
     }
 
     /**
-     * 检查是否应该转人工
-     */
-    private boolean shouldTransferToHuman(String message) {
-        if (message == null || message.trim().isEmpty()) {
-            return false;
-        }
-        
-        String lowerMessage = message.toLowerCase().trim();
-        for (String keyword : TRANSFER_KEYWORDS) {
-            if (lowerMessage.contains(keyword)) {
-                log.info("匹配到转人工关键词: {}", keyword);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * 处理转人工请求
      */
     private Result<Map<String, Object>> handleTransferToHuman(String message, 
@@ -114,12 +95,30 @@ public class ChatController {
                                                                String userNickname, 
                                                                String userAvatar,
                                                                String existingSessionNo) {
+        log.info("========== 处理转人工请求 ==========");
+        log.info("userId={}, userNickname={}, userAvatar={}, existingSessionNo={}", 
+                userId, userNickname, userAvatar, existingSessionNo);
+        
         try {
+            // 如果userId为空，生成一个临时ID
+            if (userId == null || userId.trim().isEmpty()) {
+                userId = "guest_" + System.currentTimeMillis();
+                log.warn("userId为空，生成临时ID: {}", userId);
+            }
+            
+            // 如果userNickname为空，设置默认值
+            if (userNickname == null || userNickname.trim().isEmpty()) {
+                userNickname = "游客用户";
+            }
+            
             // 生成新的会话编号
             String sessionNo = existingSessionNo;
             if (sessionNo == null || sessionNo.isEmpty()) {
                 sessionNo = "sess_" + System.currentTimeMillis();
             }
+            
+            log.info("创建客服会话: sessionNo={}, userId={}, userNickname={}", 
+                    sessionNo, userId, userNickname);
             
             // 创建客服会话
             sessionService.createSession(sessionNo, userId, userNickname, userAvatar);
@@ -127,18 +126,33 @@ public class ChatController {
             // 更新会话状态为等待转人工
             sessionService.updateSessionStatus(sessionNo, 1, message);
             
+            // 插入系统消息
+            String systemMsgId = "sys_" + System.currentTimeMillis();
+            String systemContent = "您好，已为您转接人工客服，请稍候，客服人员将尽快为您服务。";
+            sessionService.saveSystemMessage(sessionNo, systemMsgId, systemContent);
+            
             log.info("创建客服会话成功: sessionNo={}", sessionNo);
+            
+            // 构建系统消息返回给前端
+            Map<String, Object> systemMsg = new java.util.HashMap<>();
+            systemMsg.put("msg_id", systemMsgId);
+            systemMsg.put("content", systemContent);
+            systemMsg.put("msg_type", 1);
+            systemMsg.put("sender_type", "system");
+            systemMsg.put("sender_nickname", "系统助手");
+            systemMsg.put("create_time", new java.util.Date());
             
             Map<String, Object> result = new HashMap<>();
             result.put("transfer", true);
             result.put("sessionNo", sessionNo);
             result.put("message", "正在为您转接人工客服，请稍候...");
+            result.put("systemMessage", systemMsg);
             result.put("timestamp", System.currentTimeMillis());
             
             return Result.success("已转接人工客服", result);
             
         } catch (Exception e) {
-            log.error("转人工处理失败: {}", e.getMessage());
+            log.error("转人工处理失败: {}", e.getMessage(), e);
             return Result.error("转接人工客服失败: " + e.getMessage());
         }
     }

@@ -235,7 +235,7 @@ module.exports = {
   getPdfInfo,
   compressImage,
   changeBackground,
-  ocrImage,
+  // ocrImage,  // 已删除 - 函数未定义
   uploadFile,
   request,
   upload,

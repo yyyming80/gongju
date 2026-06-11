@@ -1,6 +1,7 @@
 package com.toolbox.controller;
 
 import com.toolbox.common.Result;
+import com.toolbox.handler.CustomerWebSocketHandler;
 import com.toolbox.service.customer.CustomerAgentService;
 import com.toolbox.service.customer.CustomerMessageService;
 import com.toolbox.service.customer.CustomerSessionService;
@@ -27,6 +28,9 @@ public class CustomerServiceController {
     @Autowired
     private CustomerAgentService agentService;
 
+    @Autowired
+    private CustomerWebSocketHandler webSocketHandler;
+
     /**
      * 客服登录
      */
@@ -46,14 +50,14 @@ public class CustomerServiceController {
      */
     @GetMapping("/sessions")
     public Result getSessions(@RequestParam(defaultValue = "-1") int status,
-                              @RequestParam(defaultValue = "1") int page,
-                              @RequestParam(defaultValue = "20") int pageSize) {
+                            @RequestParam(defaultValue = "1") int page,
+                            @RequestParam(defaultValue = "20") int pageSize) {
         List<Map<String, Object>> sessions = sessionService.getSessionList(status, page, pageSize);
         return Result.success(sessions);
     }
 
     /**
-     * 获取等待中的会话
+     * 获取等待中的会话（待接入）
      */
     @GetMapping("/sessions/waiting")
     public Result getWaitingSessions() {
@@ -78,8 +82,8 @@ public class CustomerServiceController {
      */
     @GetMapping("/messages/{sessionNo}")
     public Result getMessages(@PathVariable String sessionNo,
-                              @RequestParam(defaultValue = "1") int page,
-                              @RequestParam(defaultValue = "50") int pageSize) {
+                            @RequestParam(defaultValue = "1") int page,
+                            @RequestParam(defaultValue = "50") int pageSize) {
         List<Map<String, Object>> messages = messageService.getMessages(sessionNo, page, pageSize);
         return Result.success(messages);
     }
@@ -115,6 +119,10 @@ public class CustomerServiceController {
         String sessionNo = (String) params.get("sessionNo");
         Integer rating = params.get("rating") != null ? (Integer) params.get("rating") : null;
         sessionService.endSession(sessionNo, rating);
+        
+        // 通知小程序会话已关闭
+        webSocketHandler.notifySessionClosed(sessionNo);
+        
         return Result.success();
     }
 
@@ -124,10 +132,39 @@ public class CustomerServiceController {
     @PostMapping("/session/accept")
     public Result acceptSession(@RequestBody Map<String, Object> params) {
         String sessionNo = (String) params.get("sessionNo");
-        Long agentId = Long.parseLong((String) params.get("agentId"));
         String agentNickname = (String) params.get("agentNickname");
+        
+        // 兼容处理：agentId可能是Integer、Long或String
+        Object agentIdObj = params.get("agentId");
+        Long agentId;
+        if (agentIdObj instanceof Long) {
+            agentId = (Long) agentIdObj;
+        } else if (agentIdObj instanceof Integer) {
+            agentId = ((Integer) agentIdObj).longValue();
+        } else if (agentIdObj instanceof String) {
+            agentId = Long.parseLong((String) agentIdObj);
+        } else {
+            return Result.error("agentId类型不支持: " + agentIdObj.getClass());
+        }
+        
         sessionService.assignAgent(sessionNo, agentId, agentNickname);
-        return Result.success();
+        
+        // 自动发送欢迎消息
+        String welcomeMsgId = "welcome_" + System.currentTimeMillis();
+        String welcomeContent = "您好，我是" + agentNickname + "，很高兴为您服务，请问有什么可以帮助您？";
+        sessionService.saveSystemMessage(sessionNo, welcomeMsgId, welcomeContent);
+        
+        // 构建欢迎消息返回
+        Map<String, Object> welcomeMessage = new java.util.HashMap<>();
+        welcomeMessage.put("msg_id", welcomeMsgId);
+        welcomeMessage.put("content", welcomeContent);
+        welcomeMessage.put("msg_type", 1);
+        welcomeMessage.put("sender_type", 3);
+        welcomeMessage.put("sender_id", agentId.toString());
+        welcomeMessage.put("sender_nickname", agentNickname);
+        welcomeMessage.put("create_time", new java.util.Date());
+        
+        return Result.success(welcomeMessage);
     }
 
     /**

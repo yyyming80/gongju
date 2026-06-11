@@ -50,7 +50,12 @@
 }
 
 .message.user {
-  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-right: 20rpx;
+}
+
+.message.ai {
+  margin-left: 20rpx;
 }
 
 .message.system {
@@ -58,11 +63,14 @@
 }
 
 .system-text {
-  font-size: 24rpx;
-  color: #999;
-  background: #f0f0f0;
-  padding: 10rpx 20rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #fff3e0;
+  padding: 16rpx 24rpx;
   border-radius: 8rpx;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.5;
 }
 
 .avatar {
@@ -99,6 +107,10 @@
 .message.user .content-text {
   background: #667eea;
   color: #fff;
+}
+
+.user-avatar {
+  background: #95a5f6;
 }
 
 .time {

@@ -7,7 +7,6 @@ com\toolbox\controller\ToolController.class
 com\toolbox\service\PdfMergeService$PdfFileInfo.class
 com\toolbox\config\CustomerWebSocketConfig.class
 com\toolbox\service\PdfMergeService.class
-com\toolbox\config\AuthInterceptor.class
 com\toolbox\handler\CustomerWebSocketHandler.class
 com\toolbox\service\customer\AiCustomerService.class
 com\toolbox\controller\PdfController.class

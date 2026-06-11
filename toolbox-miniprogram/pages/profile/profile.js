@@ -63,11 +63,11 @@ Page({
    */
   goToChat() {
     // 需要登录
-    if (!auth.checkLogin('/pages/chat/chat/index')) {
+    if (!auth.checkLogin('/pages/customer/chat/index')) {
       return;
     }
     wx.navigateTo({
-      url: '/pages/chat/chat/index'
+      url: '/pages/customer/chat/index?type=ai'
     });
   },
 

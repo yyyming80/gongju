@@ -13,13 +13,22 @@
 
   <scroll-view class="message-list" scroll-y scroll-top="{{scrollTop}}" bindscrolltoupper="loadMore">
     <view class="message-wrapper" wx:for="{{messages}}" wx:key="msg_id">
-      <!-- 系统消息 -->
-      <view class="message system" wx:if="{{item.sender_type === 'system'}}">
+      <!-- 系统消息 sender_type=4 -->
+      <view class="message system" wx:if="{{item.sender_type === 4 || item.sender_type === 'system'}}">
         <text class="system-text">{{item.content}}</text>
       </view>
 
-      <!-- AI/客服消息 -->
-      <view class="message ai" wx:elif="{{item.sender_type === 2 || item.sender_type === 3}}">
+      <!-- 客服消息 sender_type=3 -->
+      <view class="message ai" wx:elif="{{item.sender_type === 3}}">
+        <view class="avatar">👨‍💼</view>
+        <view class="message-content">
+          <text class="content-text">{{item.content}}</text>
+          <text class="time">{{formatTime(item.create_time)}}</text>
+        </view>
+      </view>
+
+      <!-- AI消息 sender_type=2 -->
+      <view class="message ai" wx:elif="{{item.sender_type === 2}}">
         <view class="avatar">🤖</view>
         <view class="message-content">
           <text class="content-text">{{item.content}}</text>
@@ -27,13 +36,13 @@
         </view>
       </view>
 
-      <!-- 用户消息 -->
+      <!-- 用户消息 sender_type=1 -->
       <view class="message user" wx:else>
+        <view class="avatar user-avatar">{{userAvatar}}</view>
         <view class="message-content">
           <text class="content-text">{{item.content}}</text>
           <text class="time">{{formatTime(item.create_time)}}</text>
         </view>
-        <view class="avatar">{{userAvatar}}</view>
       </view>
     </view>
 

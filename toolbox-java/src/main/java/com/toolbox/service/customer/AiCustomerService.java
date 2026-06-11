@@ -21,14 +21,19 @@ public class AiCustomerService {
     @Autowired
     private ChatService chatService;
 
-    // 转人工关键词
-    private static final Set<String> TRANSFER_KEYWORDS = new HashSet<>(Arrays.asList(
-            "转人工", "人工客服", "人工服务", "投诉", "退款", "还钱",
-            "退款", "要退款", "退款处理", "投诉", "举报", "骗子",
+    /**
+     * 转人工关键词（统一关键词来源）
+     * 【重要】此定义为唯一权威来源
+     */
+    public static final Set<String> TRANSFER_KEYWORDS = new HashSet<>(Arrays.asList(
+            "转人工", "人工客服", "人工服务", "联系客服", "人工", "客服",
+            "投诉", "退款", "还钱", "要退款", "退款处理", "举报", "骗子",
             "太差了", "不满意", "没用", "垃圾", "非常不满"
     ));
 
-    // AI无法处理的问题类型
+    /**
+     * AI无法处理的问题类型
+     */
     private static final Set<String> AI_WEAK_TOPICS = new HashSet<>(Arrays.asList(
             "退款", "投诉", "举报", "账户安全", "资金问题",
             "支付问题", "退款处理", "严重问题"
@@ -47,9 +52,17 @@ public class AiCustomerService {
     }
 
     /**
-     * 判断是否需要转人工
+     * 判断是否需要转人工（统一判断方法）
      */
     public boolean shouldTransferHuman(String message) {
+        return shouldTransfer(message);
+    }
+
+    /**
+     * 静态判断方法，供外部调用（ChatController等）
+     * 【重要】此方法为唯一权威判断来源
+     */
+    public static boolean shouldTransfer(String message) {
         if (message == null || message.trim().isEmpty()) {
             return false;
         }
@@ -59,7 +72,6 @@ public class AiCustomerService {
         // 检查转人工关键词
         for (String keyword : TRANSFER_KEYWORDS) {
             if (lowerMessage.contains(keyword)) {
-                log.info("检测到转人工关键词: {}", keyword);
                 return true;
             }
         }
@@ -67,7 +79,6 @@ public class AiCustomerService {
         // 检查AI弱势领域
         for (String topic : AI_WEAK_TOPICS) {
             if (lowerMessage.contains(topic)) {
-                log.info("检测到AI弱势领域: {}", topic);
                 return true;
             }
         }

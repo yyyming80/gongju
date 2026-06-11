@@ -58,8 +58,14 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
             log.info("客服连接: agentId={}", agentId);
         } else {
             // 用户连接
+            log.info("========== 用户建立连接 ==========");
+            log.info("sessionNo={}", sessionNo);
+            log.info("userId={}", userId);
+            
             userSessions.put(sessionNo, session);
-            log.info("用户连接: sessionNo={}, userId={}", sessionNo, userId);
+            
+            log.info("当前所有连接={}", userSessions.keySet());
+            log.info("=================================");
         }
     }
 
@@ -108,6 +114,9 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
      * 开始会话
      */
     private void handleStartSession(WebSocketSession session, Map<String, Object> data) throws IOException {
+        log.info("========== handleStartSession 进入 ==========");
+        log.info("收到data: {}", data);
+        
         String sessionNo = (String) data.get("sessionNo");
         String userId = (String) data.get("userId");
         String userNickname = (String) data.get("userNickname");
@@ -119,8 +128,8 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
         // 保存session映射
         userSessions.put(sessionNo, session);
 
-        // 发送欢迎消息
-        String welcomeMsg = "您好！我是智能客服助手，请问有什么可以帮助您？";
+        // 发送欢迎消息（使用统一来源）
+        String welcomeMsg = aiCustomerService.getWelcomeMessage();
         messageService.saveMessage(sessionNo, "msg_" + System.currentTimeMillis(),
                 1, welcomeMsg, (byte) 2, "AI", "智能客服");
 
@@ -132,25 +141,50 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
      * 处理发送消息
      */
     private void handleSendMessage(WebSocketSession session, Map<String, Object> data) throws IOException {
-        String sessionNo = (String) data.get("sessionNo");
-        String content = (String) data.get("content");
-        String msgId = (String) data.get("msgId");
-        String senderId = (String) data.get("senderId");
-        String senderNickname = (String) data.get("senderNickname");
-
-        // 保存用户消息
-        messageService.saveMessage(sessionNo, msgId, 1, content, (byte) 1, senderId, senderNickname);
-
-        // 更新会话最后消息
-        sessionService.updateLastMessage(sessionNo, content);
-
+        // 诊断日志：打印收到的完整WebSocket消息
+        log.info("========== handleSendMessage 诊断日志 ==========");
+        log.info("收到完整WebSocket消息: {}", data);
+        log.info("各字段类型:");
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            log.info("  {} = {} (class: {})", entry.getKey(), entry.getValue(), 
+                    entry.getValue() != null ? entry.getValue().getClass().getName() : "null");
+        }
+        log.info("WebSocket session.getId() = {}", session.getId());
+        
+        // 兼容处理：Integer、Long、String三种类型
+        Object sessionNoObj = data.get("sessionNo");
+        Object contentObj = data.get("content");
+        Object msgIdObj = data.get("msgId");
+        Object senderIdObj = data.get("senderId");
+        Object senderNicknameObj = data.get("senderNickname");
+        
+        String sessionNo = objToString(sessionNoObj);
+        String content = objToString(contentObj);
+        String msgId = objToString(msgIdObj);
+        String senderId = objToString(senderIdObj);
+        String senderNickname = objToString(senderNicknameObj);
+        
+        log.info("转换后: sessionNo={}, content={}, msgId={}, senderId={}, senderNickname={}", 
+                sessionNo, content, msgId, senderId, senderNickname);
+        
+        // 判断发送者是客服还是用户
+        String userType = getParam(session, "userType");
+        log.info("userType = {}", userType);
+        
         // 获取会话状态
         int status = sessionService.getSessionStatus(sessionNo);
+        log.info("sessionStatus = {}", status);
 
         if (status == 0) {
-            // AI接待中，调用AI服务
+            // AI接待中
+            // 保存用户消息
+            messageService.saveMessage(sessionNo, msgId, 1, content, (byte) 1, senderId, senderNickname);
+            // 更新会话最后消息
+            sessionService.updateLastMessage(sessionNo, content);
+            
+            // 调用AI服务
             String aiResponse = aiCustomerService.getResponse(content);
-            boolean shouldTransfer = aiCustomerService.shouldTransferHuman(content);
+            boolean shouldTransfer = AiCustomerService.shouldTransfer(content);
 
             // 保存AI消息
             messageService.saveMessage(sessionNo, "msg_ai_" + System.currentTimeMillis(),
@@ -165,13 +199,55 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
                         "如果您的问题未能解决，可以回复'转人工'或点击下方按钮联系人工客服。", "system", "系统"));
             }
         } else if (status == 2) {
-            // 人工接待中，转发消息给客服
-            Map<String, Object> msg = createMessage("user", content, senderId, senderNickname);
-            msg.put("sessionNo", sessionNo);
-            sendToAllAgents(objectMapper.writeValueAsString(msg));
+            // 人工接待中
+            if ("agent".equals(userType)) {
+                // 客服发送的消息
+                log.info("客服发送消息，转发给用户");
+                
+                // 保存客服消息到数据库（sender_type=3）
+                messageService.saveMessage(sessionNo, msgId, 1, content, (byte) 3, senderId, senderNickname);
+                log.info("客服消息已保存到数据库: sender_type=3");
+                
+                // 转发给用户
+                Map<String, Object> msg = createMessage("agent", content, senderId, senderNickname);
+                msg.put("sessionNo", sessionNo);
+                sendToUser(sessionNo, msg);
+            } else {
+                // 用户发送的消息
+                log.info("用户发送消息，转发给客服");
+                
+                // 保存用户消息
+                messageService.saveMessage(sessionNo, msgId, 1, content, (byte) 1, senderId, senderNickname);
+                // 更新会话最后消息
+                sessionService.updateLastMessage(sessionNo, content);
+                
+                // 转发给客服
+                Map<String, Object> msg = createMessage("user", content, senderId, senderNickname);
+                msg.put("sessionNo", sessionNo);
+                sendToAllAgents(objectMapper.writeValueAsString(msg));
 
-            // 更新未读数
-            sessionService.incrementAgentUnreadCount(sessionNo);
+                // 更新未读数
+                sessionService.incrementAgentUnreadCount(sessionNo);
+            }
+        }
+        log.info("==============================================");
+    }
+    
+    /**
+     * 兼容转换：Integer、Long、String -> String
+     */
+    private String objToString(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        if (obj instanceof String) {
+            return (String) obj;
+        } else if (obj instanceof Long) {
+            return ((Long) obj).toString();
+        } else if (obj instanceof Integer) {
+            return ((Integer) obj).toString();
+        } else {
+            return obj.toString();
         }
     }
 
@@ -179,6 +255,9 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
      * 处理转人工请求
      */
     private void handleTransferToHuman(WebSocketSession session, Map<String, Object> data) throws IOException {
+        log.info("========== handleTransferToHuman 进入 ==========");
+        log.info("收到data: {}", data);
+        
         String sessionNo = (String) data.get("sessionNo");
         String reason = (String) data.get("reason");
 
@@ -201,6 +280,9 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
      * 客服接受会话
      */
     private void handleAgentAccept(WebSocketSession session, Map<String, Object> data) throws IOException {
+        log.info("========== handleAgentAccept 进入 ==========");
+        log.info("收到data: {}", data);
+        
         String sessionNo = (String) data.get("sessionNo");
         Long agentId = Long.parseLong((String) data.get("agentId"));
         String agentNickname = (String) data.get("agentNickname");
@@ -239,10 +321,29 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
      * 发送消息给用户
      */
     private void sendToUser(String sessionNo, Map<String, Object> message) throws IOException {
+        log.info("========== sendToUser ==========");
+        log.info("sessionNo={}", sessionNo);
+        log.info("userSessions.size={}", userSessions.size());
+        log.info("所有连接key={}", userSessions.keySet());
+        
         WebSocketSession userSession = userSessions.get(sessionNo);
-        if (userSession != null && userSession.isOpen()) {
-            userSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        
+        log.info("查找到的session={}", userSession);
+        
+        if (userSession == null) {
+            log.error("未找到用户连接 sessionNo={}", sessionNo);
+            return;
         }
+        
+        log.info("session.isOpen={}", userSession.isOpen());
+        
+        if (userSession.isOpen()) {
+            userSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+            log.info("消息已发送给用户");
+        } else {
+            log.warn("用户连接已关闭");
+        }
+        log.info("=================================");
     }
 
     /**
@@ -254,6 +355,37 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
                 agentSession.sendMessage(new TextMessage(message));
             }
         }
+    }
+    
+    /**
+     * 通知用户会话已关闭（供Controller调用）
+     * 发送 SESSION_CLOSED 事件给小程序
+     */
+    public void notifySessionClosed(String sessionNo) {
+        log.info("========== notifySessionClosed ==========");
+        log.info("sessionNo={}", sessionNo);
+        
+        WebSocketSession userSession = userSessions.get(sessionNo);
+        
+        if (userSession != null && userSession.isOpen()) {
+            try {
+                // 创建会话关闭消息
+                Map<String, Object> closeMsg = new ConcurrentHashMap<>();
+                closeMsg.put("event", "SESSION_CLOSED");
+                closeMsg.put("sessionNo", sessionNo);
+                closeMsg.put("content", "客服已结束会话，已为您切换到AI客服模式");
+                closeMsg.put("timestamp", System.currentTimeMillis());
+                
+                String jsonMsg = objectMapper.writeValueAsString(closeMsg);
+                userSession.sendMessage(new TextMessage(jsonMsg));
+                log.info("会话关闭通知已发送: sessionNo={}", sessionNo);
+            } catch (IOException e) {
+                log.error("发送会话关闭通知失败: sessionNo={}", sessionNo, e);
+            }
+        } else {
+            log.info("用户未在线或连接已关闭，跳过通知: sessionNo={}", sessionNo);
+        }
+        log.info("======================================");
     }
 
     /**
