@@ -196,6 +196,12 @@
   font-weight: 600;
 }
 
+.size-hint {
+  font-size: 24rpx;
+  color: #e6a23c;
+  font-style: italic;
+}
+
 .result-actions {
   display: flex;
   gap: 20rpx;
@@ -204,13 +210,13 @@
 
 .action-btn {
   flex: 1;
-  height: 70rpx;
+  height: 80rpx;
   background-color: #f5f7fa;
   color: #333;
   font-size: 28rpx;
   border: none;
-  border-radius: 35rpx;
-  line-height: 70rpx;
+  border-radius: 40rpx;
+  line-height: 80rpx;
 }
 
 .action-btn.primary {
@@ -237,8 +243,7 @@
 }
 
 .info-item {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #666;
-  margin-bottom: 10rpx;
-  line-height: 1.5;
+  line-height: 1.8;
 }

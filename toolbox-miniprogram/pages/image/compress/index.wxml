@@ -37,20 +37,38 @@
     <view class="result-card">
       <text class="result-title">压缩成功</text>
       <image class="result-img" src="{{resultImage}}" mode="aspectFit"></image>
+      
       <view class="result-info">
+        <!-- 原图大小 -->
         <view class="size-row">
-          <text class="size-label">压缩前：</text>
-          <text class="size-value">{{formatSize(originalSize)}}</text>
+          <text class="size-label">原图大小：</text>
+          <text class="size-value">{{originalSizeText}}</text>
         </view>
+        
+        <!-- 压缩后大小 -->
         <view class="size-row">
           <text class="size-label">压缩后：</text>
-          <text class="size-value">{{formatSize(compressedSize)}}</text>
+          <text class="size-value">{{compressedSizeText}}</text>
         </view>
-        <view class="size-row">
-          <text class="size-label">节省：</text>
+        
+        <!-- 节省空间 -->
+        <view class="size-row" wx:if="{{savedSize > 0}}">
+          <text class="size-label">节省空间：</text>
+          <text class="size-value highlight">{{savedSizeText}}</text>
+        </view>
+        
+        <!-- 压缩率 -->
+        <view class="size-row" wx:if="{{compressionRate != '0%' && compressionRate != 0}}">
+          <text class="size-label">压缩率：</text>
           <text class="size-value highlight">{{compressionRate}}</text>
         </view>
+        
+        <!-- 获取失败提示 -->
+        <view class="size-row" wx:if="{{originalSize <= 0 || compressedSize <= 0}}">
+          <text class="size-hint">文件大小获取失败</text>
+        </view>
       </view>
+      
       <view class="result-actions">
         <button class="action-btn" bindtap="previewResult">预览</button>
         <button class="action-btn primary" bindtap="saveImage">保存</button>

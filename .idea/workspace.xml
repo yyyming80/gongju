@@ -4,62 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1515a7f0-4d6f-423d-9c8a-f07bc1d1509b" name="更改" comment="xiangmu">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gongju.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+    <list default="true" id="1515a7f0-4d6f-423d-9c8a-f07bc1d1509b" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AI_HUMAN_CUSTOMER_SERVICE_DESIGN.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CUSTOMER_SERVICE_MVP_REPORT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PROJECT_REPORT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/entity/SysConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/BaseEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/PayOrder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/ResumeRecord.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/SysAdvertisement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/SysUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/entity/SysUserVip.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-common/src/main/java/com/toolbox/common/utils/R.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/controller/CustomerServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/controller/CustomerServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/handler/CustomerWebSocketHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/handler/CustomerWebSocketHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/service/customer/AiCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/service/customer/AiCustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/service/customer/CustomerSessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/src/main/java/com/toolbox/service/customer/CustomerSessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/controller/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/controller/CustomerServiceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/controller/CustomerServiceController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/handler/CustomerWebSocketHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/handler/CustomerWebSocketHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/service/customer/AiCustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/service/customer/AiCustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/service/customer/CustomerSessionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/classes/com/toolbox/service/customer/CustomerSessionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-java/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/toolbox.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/toolbox.ipr" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-java/toolbox.iws" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/create_icons.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/images/create_icons.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/images/make_icons.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/images/mkicons.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/chat/chat/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/chat/chat/index.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/chat/chat/index.wxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/chat/chat/index.wxss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/customer/chat/index.wxss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/module/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/module/index.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/module/index.wxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/module/index.wxss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/profile/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/utils/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/utils/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-vue/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/views/Login.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/views/customer/AgentLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-vue/src/views/customer/AgentLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/views/customer/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-vue/src/views/customer/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/views/customer/SessionDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-vue/src/views/customer/SessionDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbox-vue/src/views/customer/SessionList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-vue/src/views/customer/SessionList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolju/toolbox-java/src/main/java/com/toolbox/service/customer/AiCustomerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/entity/SysConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/PayOrder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/ResumeRecord.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/SysAdvertisement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/SysUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/entity/SysUserVip.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-common_backup/src/main/java/com/toolbox/common/utils/R.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-docker/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-docker/nginx/conf.d/default.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-docker/nginx/nginx.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/toolbox-miniprogram/pages/image/compress/index.wxss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/src/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/src/router/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/src/views/ImageBackground.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbox-web/vite.config.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,6 +118,11 @@
       <workItem from="1781087690738" duration="3419000" />
       <workItem from="1781137440358" duration="1396000" />
       <workItem from="1781139158417" duration="5000" />
+      <workItem from="1781139457613" duration="734000" />
+      <workItem from="1781232939562" duration="2350000" />
+      <workItem from="1781236274867" duration="89000" />
+      <workItem from="1781345484843" duration="453000" />
+      <workItem from="1781346499588" duration="445000" />
     </task>
     <task id="LOCAL-00001" summary="xiangmu">
       <option name="closed" value="true" />
